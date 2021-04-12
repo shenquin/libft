@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shenquin <shenquin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shenquin <shenquin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 14:04:42 by shenquin          #+#    #+#             */
-/*   Updated: 2020/01/20 16:13:53 by shenquin         ###   ########.fr       */
+/*   Updated: 2021/04/12 14:34:16 by shenquin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,11 @@ void		*ft_memmove(void *dest, const void *src, size_t n);
 void		*ft_memchr(const void *s, int c, size_t n);
 void		*ft_calloc(size_t nmemb, size_t size);
 void		ft_putendl_fd(char *s, int fd);
+
+typedef struct	s_list
+{
+void *content;
+struct s_list *next;
+} 				t_list;
 
 #endif
