@@ -1,33 +1,56 @@
-SRCS		= ft_atoi.c		ft_isalpha.c 	ft_isdigit.c    ft_putchar_fd.c    ft_strlcpy.c    ft_strncmp.c\
-ft_toupper.c	ft_strjoin.c	ft_isalnum.c    ft_isascii.c    ft_isprint.c    ft_putstr_fd.c\
-ft_strdup.c    ft_strlen.c     ft_tolower.c		ft_strchr.c		ft_strrchr.c	ft_strnstr.c	ft_putnbr_fd.c\
-ft_memset.c		ft_bzero.c		ft_memcpy.c		ft_memccpy.c	ft_memmove.c	ft_memchr.c		ft_memcmp.c\
-ft_calloc.c		ft_putendl_fd.c		ft_substr.c		ft_strlcat.c	ft_strmapi.c		ft_itoa.c\
-ft_split.c		ft_strtrim.c		ft_lstadd_back.c		ft_lstaddfront.c		ft_lstnew.c\
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: thgillai <thgillai@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/03/15 13:17:14 by thgillai          #+#    #+#              #
+#    Updated: 2021/05/20 17:04:50 by thgillai         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-OBJS		= ${SRCS:.c=.o}
+SRCS =		atoi.c strlen.c isalpha.c isdigit.c strchr.c putstr_fd.c \
+			isalnum.c isascii.c isprint.c toupper.c tolower.c putnbr_fd.c \
+			strncmp.c strlcpy.c strlcat.c strnstr.c strdup.c putendl_fd.c \
+			strrchr.c memset.c bzero.c memcpy.c memccpy.c putchar_fd.c \
+			memchr.c memcmp.c memmove.c calloc.c substr.c strjoin.c \
+			lstnew.c lstadd_front.c lstsize.c lstlast.c listadd_back.c \
+			lstdelone.c lstclear.c lstiter.c lstmap.c strtrim.c itoa.c \
+			strmapi.c split.c ispace.c strcpy.c exit_error.c strcmp.c \
+			../get_next_line/get_next_line.c freetab.c\
+			../get_next_line/get_next_line_utils.c \
+			../get_next_line/norme_file.c \
 
-NAME 		= libft.a
 
-CC 			= gcc
+OBJS =		${addprefix ${SRCDIR}, ${SRCS:.c=.o}}
 
-RM			= rm -f
+NAME =		libft.a
 
-CFLAGS		= -Wall -Wextra -Werror
+CC = 		gcc -Wall -Wextra -Werror
+RM = 		rm -f
+
+CFLAGS =	-Wall -Wextra -Werror
+
+SRCDIR = ./src/
+HEADDIR = ./inc/
 
 .c.o:
-			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+			${CC} ${CFLAGS} -I${HEADDIR} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
 			ar rc ${NAME} ${OBJS}
+			@echo "${OUT_PREFIX}\033[38;5;46mLibrary compiled\033[0m"
 
-all:		${NAME}  
+all:		${NAME}
 
 clean:
 			${RM} ${OBJS}
+			@echo "${OUT_PREFIX}\033[38;5;46mObjects cleaned\033[0m"
 
 fclean:		clean
 			${RM} ${NAME}
+			@echo "${OUT_PREFIX}\033[38;5;46mLibrary cleaned\033[0m"
 
 re:			fclean all
 
