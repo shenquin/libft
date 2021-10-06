@@ -3,97 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgillai <thgillai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shenquin <shenquin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 13:06:06 by thgillai          #+#    #+#             */
-/*   Updated: 2021/04/20 13:55:09 by thgillai         ###   ########.fr       */
+/*   Created: 2020/02/25 10:45:09 by shenquin          #+#    #+#             */
+/*   Updated: 2021/10/01 14:22:08 by shenquin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/libft.h"
 
-static int	numstring(char const *s1, char c)
-{
-	int	comp;
-	int	cles;
-
-	comp = 0;
-	cles = 0;
-	if (*s1 == '\0')
-		return (0);
-	while (*s1 != '\0')
-	{
-		if (*s1 == c)
-			cles = 0;
-		else if (cles == 0)
-		{
-			cles = 1;
-			comp++;
-		}
-		s1++;
-	}
-	return (comp);
-}
-
-static int	numchar(char const *s2, char c, int i)
-{
-	int	lenght;
-
-	lenght = 0;
-	while (s2[i] != c && s2[i] != '\0')
-	{
-		lenght++;
-		i++;
-	}
-	return (lenght);
-}
-
-static char	**freee(char const **dst, int j)
-{
-	while (j > 0)
-	{
-		j--;
-		free((void *)dst[j]);
-	}
-	free(dst);
-	return (NULL);
-}
-
-static char	**affect(char const *s, char **dst, char c, int l)
+static int	ft_malloc_s(char const *s, char c)
 {
 	int	i;
-	int	j;
-	int	k;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] && s[i] != c)
+		{
+			counter++;
+			while (s[i] && s[i] != c)
+				i++;
+		}
+	}
+	return (counter);
+}
+
+void	ft_free_split(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+static char	*ft_write_eachstr(const char *s, char c, char **tab)
+{
+	size_t	i;
+	char	*dest;
+
+	i = 0;
+	while (s[i] && s[i] != c)
+		i++;
+	dest = ft_substr(s, 0, i);
+	if (dest == NULL)
+		ft_free_split(tab);
+	return (dest);
+}
+
+static char	**malloc_in_tab(char const *s1, char c)
+{
+	char	**tab;
+
+	tab = malloc((ft_malloc_s(s1, c) + 1) * sizeof(char *));
+	if (!tab)
+		return (NULL);
+	return (tab);
+}
+
+char	**ft_split(char const *s1, char c)
+{
+	int		i;
+	int		j;
+	int		counter;
+	char	**tab;
 
 	i = 0;
 	j = 0;
-	while (s[i] != '\0' && j < l)
+	counter = 0;
+	if (s1 == NULL)
+		return (NULL);
+	tab = malloc_in_tab(s1, c);
+	while (s1[i])
 	{
-		k = 0;
-		while (s[i] == c)
+		while (s1[i] == c)
 			i++;
-		dst[j] = (char *)malloc(sizeof(char) * numchar(s, c, i) + 1);
-		if (dst[j] == NULL)
-			return (freee((char const **)dst, j));
-		while (s[i] != '\0' && s[i] != c)
-			dst[j][k++] = s[i++];
-		dst[j][k] = '\0';
-		j++;
+		if (s1[i] && s1[i] != c)
+		{
+			tab[j++] = ft_write_eachstr(&s1[i], c, tab);
+			while (s1[i] && s1[i] != c)
+				i++;
+		}
 	}
-	dst[j] = 0;
-	return (dst);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**dst;
-	int		l;
-
-	if (s == NULL)
-		return (NULL);
-	l = numstring(s, c);
-	dst = (char **)malloc(sizeof(char *) * (l + 1));
-	if (dst == NULL)
-		return (NULL);
-	return (affect(s, dst, c, l));
+	tab[j] = NULL;
+	return (tab);
 }

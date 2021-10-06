@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgillai <thgillai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shenquin <shenquin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/12 11:35:37 by thgillai          #+#    #+#             */
-/*   Updated: 2021/05/20 17:04:01 by thgillai         ###   ########.fr       */
+/*   Created: 2020/02/25 10:45:09 by shenquin          #+#    #+#             */
+/*   Updated: 2021/10/01 14:17:59 by shenquin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <ctype.h>
+# include <stdio.h>
 
 typedef struct s_list
 {
@@ -62,6 +63,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_itoa(int nbr);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	**ft_split(char const *s, char c);
+void	ft_free_split(char **tab);
 
 /* Partie bonus */
 
@@ -76,10 +78,10 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 /* Partie perso */
+
 int		ft_ispace(char c);
 void	exit_error(char *error_string);
 size_t	ft_strcpy(char *dest, const char *src);
 int		ft_strcmp(const char *s1, const char *s2);
-void	ft_freetab(char **tabs);
 
 #endif
